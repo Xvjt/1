@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>炙茶 - 点茶之美</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="interaction1" class="page interaction-page">
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 10%"></div>
+    </div>
+    <h2 class="interaction-title">炙茶</h2>
+    <div class="interaction-area">
+      <div class="fire"></div>
+      <div class="tea-leaf" draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)"></div>
+      <div class="operation-hint">将茶叶拖动到火上炙烤</div>
+    </div>
+    <div class="nav-buttons">
+      <a id="prev-btn" class="nav-btn" href="intro.html">上一页</a>
+      <a id="next-btn" class="nav-btn" href="interaction2.html">下一页</a>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // 炙茶拖拽功能
+    function dragStart(event) {
+      event.dataTransfer.setData("text/plain", event.target.id);
+    }
+    
+    function dragEnd(event) {
+      const teaLeaf = event.target;
+      const fire = document.querySelector('.fire');
+      
+      const teaRect = teaLeaf.getBoundingClientRect();
+      const fireRect = fire.getBoundingClientRect();
+      
+      // 检测是否拖到火上
+      if (teaRect.left < fireRect.right && 
+          teaRect.right > fireRect.left && 
+          teaRect.top < fireRect.bottom && 
+          teaRect.bottom > fireRect.top) {
+        showPopup('炙茶完成！');
+      }
+    }
+  </script>
+</body>
+</html>

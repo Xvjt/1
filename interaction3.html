@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>候汤 - 点茶之美</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="interaction3" class="page interaction-page">
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 30%"></div>
+    </div>
+    <h2 class="interaction-title">候汤</h2>
+    <div class="interaction-area">
+      <div class="fire"></div>
+      <div class="tea-cup" onclick="heatWater()"></div>
+      <div class="hot-water" id="hot-water"></div>
+      <div class="operation-hint" id="water-hint">点击茶杯加热水</div>
+    </div>
+    <div class="nav-buttons">
+      <a id="prev-btn" class="nav-btn" href="interaction2.html">上一页</a>
+      <a id="next-btn" class="nav-btn" href="interaction4.html">下一页</a>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // 候汤点击加热
+    function heatWater() {
+      const hotWater = document.getElementById('hot-water');
+      const hint = document.getElementById('water-hint');
+      
+      // 显示热水动画
+      hotWater.style.opacity = '1';
+      hotWater.style.background = 'linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)';
+      
+      // 改变提示文字
+      hint.textContent = '水已烧开！';
+      
+      showPopup('候汤完成！');
+    }
+  </script>
+</body>
+</html>

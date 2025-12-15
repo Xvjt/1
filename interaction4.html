@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>取粉 - 点茶之美</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="interaction4" class="page interaction-page">
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 40%"></div>
+    </div>
+    <h2 class="interaction-title">取粉</h2>
+    <div class="interaction-area">
+      <div class="mill-stone">茶粉</div>
+      <div class="tea-spoon" draggable="true" ondragstart="dragStart(event)" ondragend="dragEnd(event)"></div>
+      <div class="tea-bowl" id="tea-bowl"></div>
+      <div class="operation-hint">用茶勺取茶粉放入茶盏</div>
+    </div>
+    <div class="nav-buttons">
+      <a id="prev-btn" class="nav-btn" href="interaction3.html">上一页</a>
+      <a id="next-btn" class="nav-btn" href="interaction5.html">下一页</a>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // 取粉拖拽功能
+    function dragStart(event) {
+      event.dataTransfer.setData("text/plain", event.target.id);
+    }
+    
+    function dragEnd(event) {
+      const teaSpoon = event.target;
+      const teaBowl = document.getElementById('tea-bowl');
+      
+      const spoonRect = teaSpoon.getBoundingClientRect();
+      const bowlRect = teaBowl.getBoundingClientRect();
+      
+      // 检测是否将茶勺放入茶盏
+      if (spoonRect.left < bowlRect.right && 
+          spoonRect.right > bowlRect.left && 
+          spoonRect.top < bowlRect.bottom && 
+          spoonRect.bottom > bowlRect.top) {
+        teaBowl.textContent = '茶粉已放入';
+        showPopup('取粉完成！');
+      }
+    }
+  </script>
+</body>
+</html>

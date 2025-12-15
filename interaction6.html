@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>击拂 - 点茶之美</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="interaction6" class="page interaction-page">
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 80%"></div>
+    </div>
+    <div class="whisk-progress" id="whisk-progress">击拂进度: 0%</div>
+    <h2 class="interaction-title">击拂</h2>
+    <div class="interaction-area">
+      <div class="tea-bowl">茶汤</div>
+      <div class="whisk" id="whisk" ontouchstart="startWhisk(event)" ontouchend="stopWhisk()" ontouchmove="moveWhisk(event)" onmousedown="startWhisk(event)" onmouseup="stopWhisk()" onmousemove="moveWhisk(event)"></div>
+      <div class="operation-hint">在茶盏内滑动茶筅</div>
+    </div>
+    <div class="nav-buttons">
+      <a id="prev-btn" class="nav-btn" href="interaction5.html">上一页</a>
+      <a id="next-btn" class="nav-btn" href="artifact.html">下一页</a>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // 击拂功能
+    let isWhisking = false;
+    let whiskProgress = 0;
+    let lastX = 0;
+    let lastY = 0;
+    
+    function startWhisk(event) {
+      event.preventDefault();
+      isWhisking = true;
+      
+      // 获取初始位置
+      if (event.touches) {
+        lastX = event.touches[0].clientX;
+        lastY = event.touches[0].clientY;
+      } else {
+        lastX = event.clientX;
+        lastY = event.clientY;
+      }
+    }
+    
+    function stopWhisk() {
+      isWhisking = false;
+    }
+    
+    function moveWhisk(event) {
+      if (!isWhisking) return;
+      event.preventDefault();
+      
+      // 获取当前位置
+      let currentX, currentY;
+      if (event.touches) {
+        currentX = event.touches[0].clientX;
+        currentY = event.touches[0].clientY;
+      } else {
+        currentX = event.clientX;
+        currentY = event.clientY;
+      }
+      
+      // 计算移动距离
+      const distance = Math.sqrt(
+        Math.pow(currentX - lastX, 2) + 
+        Math.pow(currentY - lastY, 2)
+      );
+      
+      // 更新进度
+      whiskProgress += distance * 0.1;
+      whiskProgress = Math.min(whiskProgress, 100);
+      
+      // 更新显示
+      updateWhiskProgress();
+      
+      // 生成泡沫效果
+      if (distance > 5) {
+        createFoam(currentX, currentY);
+      }
+      
+      // 更新最后位置
+      lastX = currentX;
+      lastY = currentY;
+      
+      // 检查是否完成
+      if (whiskProgress >= 100) {
+        showPopup('击拂完成！');
+      }
+    }
+    
+    function updateWhiskProgress() {
+      const progressText = document.getElementById('whisk-progress');
+      const progressBar = document.querySelector('.progress-fill');
+      
+      if (progressText) {
+        progressText.textContent = `击拂进度: ${Math.round(whiskProgress)}%`;
+      }
+      
+      if (progressBar) {
+        progressBar.style.width = `${whiskProgress}%`;
+      }
+    }
+    
+    function createFoam(x, y) {
+      const interactionArea = document.querySelector('.interaction-area');
+      const rect = interactionArea.getBoundingClientRect();
+      
+      const foam = document.createElement('div');
+      foam.className = 'tea-foam';
+      
+      // 随机大小
+      const size = Math.random() * 10 + 5;
+      foam.style.width = `${size}px`;
+      foam.style.height = `${size}px`;
+      
+      // 计算相对位置
+      foam.style.left = `${x - rect.left - size/2}px`;
+      foam.style.top = `${y - rect.top - size/2}px`;
+      
+      interactionArea.appendChild(foam);
+      
+      // 显示泡沫
+      setTimeout(() => {
+        foam.style.opacity = '1';
+      }, 10);
+      
+      // 移除泡沫
+      setTimeout(() => {
+        foam.remove();
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

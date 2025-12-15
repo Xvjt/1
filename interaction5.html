@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注汤 - 点茶之美</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="interaction5" class="page interaction-page">
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 60%"></div>
+    </div>
+    <h2 class="interaction-title">注汤</h2>
+    <div class="interaction-area">
+      <div class="tea-bowl">茶粉</div>
+      <div class="hot-water" id="hot-water2" onclick="pourWater()"></div>
+      <div class="operation-hint" id="pour-hint">点击热水倒入茶盏</div>
+    </div>
+    <div class="nav-buttons">
+      <a id="prev-btn" class="nav-btn" href="interaction4.html">上一页</a>
+      <a id="next-btn" class="nav-btn" href="interaction6.html">下一页</a>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // 注汤功能
+    function pourWater() {
+      const hotWater = document.getElementById('hot-water2');
+      const teaBowl = document.querySelector('.tea-bowl');
+      const hint = document.getElementById('pour-hint');
+      
+      // 显示倒水效果
+      hotWater.style.opacity = '1';
+      hotWater.style.background = 'radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 70%)';
+      
+      // 更新茶盏内容
+      teaBowl.textContent = '茶汤';
+      hint.textContent = '注汤完成！';
+      
+      showPopup('注汤完成！');
+    }
+  </script>
+</body>
+</html>

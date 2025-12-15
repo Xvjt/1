@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>碾磨 - 点茶之美</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="interaction2" class="page interaction-page">
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 20%"></div>
+    </div>
+    <h2 class="interaction-title">碾磨</h2>
+    <div class="interaction-area">
+      <div class="tea-leaf" draggable="true" ondragstart="dragStart(event)"></div>
+      <div class="mill-stone" ondragover="dragOver(event)" ondrop="drop(event)">石磨</div>
+      <div class="operation-hint">将茶叶拖动到石磨上碾磨</div>
+    </div>
+    <div class="nav-buttons">
+      <a id="prev-btn" class="nav-btn" href="interaction1.html">上一页</a>
+      <a id="next-btn" class="nav-btn" href="interaction3.html">下一页</a>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // 碾磨拖拽功能
+    function dragStart(event) {
+      event.dataTransfer.setData("text/plain", event.target.id);
+    }
+    
+    function dragOver(event) {
+      event.preventDefault();
+    }
+    
+    function drop(event) {
+      event.preventDefault();
+      showPopup('碾磨完成！');
+    }
+  </script>
+</body>
+</html>
